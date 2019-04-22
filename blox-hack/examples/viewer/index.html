@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>blox viewer</title>
+</head>
+<body>
+    <canvas id="canvas" style="width: 100%; height: 100%;"></canvas>
+
+    <!-- to be parsed by initGui() -->
+    <div id="hashes" style="display: none;">
+        <a href="#hello_world.js"><span>Hello World</span></a>
+        <a href="#physics_button.js"><span>Physics Button</span></a>
+        <a href="#bouncing_scene.js"><span>Bouncing Scene</span></a>
+        <a href="#proton_particles.js"><span>Proton Based Particles</span></a>
+        <a href="#floating_text.js"><span>Floating Text in 3D</span></a>
+        <a href="#example_tick.js"><span>User scripting</span></a>
+        <a href="#example_walking.js"><span>Walking</span></a>
+        <a href="examples/cherry_blossoms.html"><span>Cherry Blossoms and Particles</span></a>
+        <a href="examples/proximity_events.html"><span>Simple Collisions - Fox in Field</span></a>
+        <!-- shims -->
+        <a href="#cherry_blossoms.js"><span>FIXME shim</span></a>
+        <a href="#proximity_events.js"><span>shim</span></a>
+    </div>
+
+    <script src="./lib/three.js"></script>
+    <!-- <script src="./lib/OrbitControls.js"></script> -->
+    <!-- ==== ==== -->
+    <!-- workaround for the datgui's menu down problem
+        https://stackoverflow.com/questions/22896144/drop-down-menu-not-work
+        https://github.com/sotownsend/dat-gui/issues/5 -->
+    <script src="./OrbitControls-fixed.js"></script>
+    <script src="./lib/hilbert3D.js"></script>
+    <script src="./lib/WebGL.js"></script>
+    <script src='./lib/LineSegmentsGeometry.js'></script>
+    <script src='./lib/LineGeometry.js'></script>
+    <script src='./lib/WireframeGeometry2.js'></script>
+    <script src='./lib/LineMaterial.js'></script>
+    <script src='./lib/LineSegments2.js'></script>
+    <script src='./lib/Line2.js'></script>
+    <script src='./lib/Wireframe.js'></script>
+    <script src="./lib/three-gltf-loader.js"></script>
+    <script src="./lib/ammo.js"></script>
+    <script src="./lib/XRSupport.js"></script>
+    <script src="./lib/three.proton.js"></script>
+
+    <!-- BloxHack use in prod -->
+    <script src="../../dist/blox-hack.min.js"></script>
+    <!-- <script src="../../lib/blox-hack.min.js"></script> -->
+    <!-- <script src="../../lib/blox-hack.js"></script> -->
+
+    <script src="./stats.min.js"></script>
+    <script src="./dat-gui-defaults.min.js"></script>
+    <script src="./jquery.min.js"></script>
+
+    <script type="module">
+    // import BloxHack from "../../src/index.js"; // BloxHack use in dev
+    import Threelet from "./threelet.js";
+
+    const resolveFileInfo = () => {
+        // const fileDefault = 'hello_world.js';
+        const fileDefault = 'example_tick.js';
+        const dir = '../../../public/examples';
+        const hash = window.location.hash.replace('#','');
+        const file = hash ? hash : fileDefault;
+        return {
+            file: file,
+            path: `${dir}/${file}`,
+        };
+    };
+    const fileInfo = resolveFileInfo();
+
+    let threelet = null;
+
+    const updateLoop = (() => {
+        const clock = new THREE.Clock(); // in closure
+        let iid = null; // in closure
+        return (fps) => {
+            if (iid !== null) {
+                // console.log('@@ updateLoop(): clearing interval:', iid);
+                clearInterval(iid);
+            }
+
+            if (fps <= 0) return; // stop the loop
+
+            // for this naive dev version, not looping with rAF()...
+            iid = setInterval(() => {
+                if (!threelet) return;
+                // Here, threelet.scene is a BehaviorScene instance with updateScene()
+                threelet.scene.updateScene(clock.getElapsedTime());
+                threelet.render();
+            }, 1000/fps);
+            // console.log('@@ updateLoop(): new interval:', iid);
+        };
+    })();
+
+    const guiConfig = {
+        //---- defaults
+        // color: "0x00ff00",
+        file: fileInfo.file,
+        axes: true,
+        targetFps: 5,
+        //---- callbacks
+        onUpdateAxes: (tf) => {
+            if (threelet) {
+                threelet.scene.getObjectByName('walls').visible = tf;
+                threelet.scene.getObjectByName('axes').visible = tf;
+            }
+        },
+        onUpdateFps: updateLoop,
+    };
+    updateLoop(guiConfig.targetFps); // first time
+
+    //---- begin gui
+    const gui = new (class ViewerGui extends DatGuiDefaults {
+        // override
+        initGui(gui, config, params) {
+            let controller;
+
+            // controller = gui.addColor(params, 'color').name('Color');
+            // controller.onChange((value) => { // or onFinishChange
+            //     console.log('@@ val:', value);
+            //     config.color = value;
+            // });
+
+            const files = {'-': 'Just test an error case'};
+            const $hashes = $('div#hashes a');
+            for (let ch of $hashes) {
+                const hash = ch.hash.replace('#','');
+                if (hash) {
+                    files[hash] = ch.text;
+                    console.log('@@ hash:', hash, ch.text);
+                }
+            }
+
+            controller = gui.add(params, 'file',
+                Object.keys(files)).name('File');
+            controller.onChange((value) => {
+                console.log('@@ val:', value);
+                config.file = value;
+
+                // TODO figure out how to "free" the blox instance
+                // just force reload everything for now...
+                window.location.hash = `#${value}`;
+                window.location.reload();
+            });
+
+            controller = gui.add(params, 'axes').name('Axes');
+            controller.onChange((value) => {
+                console.log('@@ val:', value);
+                config.axes = value;
+                config.onUpdateAxes(value);
+            });
+
+            controller = gui.add(params, 'targetFps')
+                .min(0).max(60).step(1).name('Target FPS');
+            controller.onChange((value) => {
+                config.targetFps = value;
+                config.onUpdateFps(value);
+            });
+
+            // controller = gui.add(params, 'reset').name("Reset");
+            // controller.onChange((value) => {
+            //     this.applyDefaults();
+            //     Object.assign(config, params);
+            //     // onUpdateXXX()...
+            // });
+
+            controller = gui.add(params, 'sourceCode').name("Source Code");
+            controller.onChange((value) => {
+                window.location.href = "-pointer/tree/master/examples/demo-api";
+            });
+        }
+    })(guiConfig);
+
+    gui.setDefaults({
+        // color: guiConfig.color.replace("0x", "#"),
+        file: guiConfig.file,
+        axes: guiConfig.axes,
+        targetFps: guiConfig.targetFps,
+        // reset: () => {},
+        sourceCode: () => {},
+    });
+    //---- end gui
+
+    const blox = new BloxHack({description: fileInfo.path}, undefined, {
+        onBehaviorScene: bs => {
+            console.log('@@ bs:', bs);
+            if (bs.isHack) {
+                // threelet assumes (0,0,1) is the up vector, so adapt the scene
+                bs.rotation.x = Math.PI/2;
+
+                threelet = new Threelet({
+                    canvas: document.getElementById("canvas"),
+                    optScene: bs,
+                    optClassControls: window.THREE.OrbitControls,
+                    optClassStats: window.Stats,
+                });
+            }
+        },
+    });
+    console.log('@@ blox:', blox);
+    </script>
+</body>
+</html>

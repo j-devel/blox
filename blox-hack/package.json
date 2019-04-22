@@ -1,0 +1,45 @@
+{
+    "name": "blox-hack",
+    "private": true,
+    "description": "integration hack of blox",
+    "main": "dist/blox-hack.js",
+    "directories": {
+        "example": "examples",
+        "test": "test"
+    },
+    "scripts": {
+        "dist": "npm run build && npm run build:esm && rm -rf ./dist && cp -r ./lib ./dist",
+        "build": "webpack --mode development --env dev && webpack --mode production --env build && npm run test",
+        "build:esm": "webpack --mode production --env esm && npm run test",
+        "dev": "webpack --mode development --progress --colors --watch --env dev",
+        "test": "mocha --require babel-core/register --colors ./test/*.spec.js",
+        "test:watch": "mocha --require babel-core/register --colors -w ./test/*.spec.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "author": "j-devel",
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^8.0.3",
+        "babel-loader": "^7.1.2",
+        "babel-plugin-add-module-exports": "^0.2.1",
+        "babel-preset-env": "^1.6.1",
+        "chai": "^4.1.2",
+        "eslint": "^5.3.0",
+        "eslint-loader": "^2.1.0",
+        "lodash": "^4.17.11",
+        "mocha": "^4.0.1",
+        "three": "^0.101.0",
+        "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
+        "webpack": "^4.16.5",
+        "webpack-bundle-analyzer": "^3.0.2",
+        "webpack-cli": "^3.1.0",
+        "webpack-var2esm-plugin": "^1.2.1",
+        "yargs": "^10.0.3"
+    }
+}
