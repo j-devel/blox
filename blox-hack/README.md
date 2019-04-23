@@ -10,6 +10,8 @@
 
 This viewer supports basic features such as scene selection and FPS control.
 
+![ticks](https://j-devel.github.io/blox/blox-hack/examples/viewer/img/ticks.jpg)
+
 ## Usage
 (WIP)
 
