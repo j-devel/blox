@@ -1,1 +1,1 @@
-WIP
+A viewer for [Blox](https://github.com/anselm/blox) scenes using [blox-hack.js](https://github.com/j-devel/blox/tree/master/blox-hack) ([live demo](https://j-devel.github.io/blox/blox-hack/examples/viewer/index.html)).
