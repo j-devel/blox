@@ -1,8 +1,8 @@
 # blox-hack.js
 
-**blox-hack** is a wrapper library for [Blox](https://github.com/anselm/blox) that
-- exposes the Blox-based scene object to the caller, and
-- provides the custom render/update handles of the scene.
+**blox-hack** is a wrapper library for [Blox](https://github.com/anselm/blox) that can
+- expose the Blox-based scene object to the caller, and
+- provide the custom render/update handles of the scene.
 
 ## Demo
 
@@ -22,9 +22,7 @@ let scene = null;
 const parent = 0;
 const blox = new BloxHack({description: '../public/examples/example_tick.js'}, parent, {
     onBehaviorScene: bs => { // custom callback by blox-hack
-        if (bs.isHack) {
-            scene = bs;
-        }
+        if (bs.isHack) { scene = bs; }
     },
 });
 
