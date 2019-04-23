@@ -13,7 +13,33 @@ This viewer supports basic features such as scene selection and FPS control.
 ![ticks](https://j-devel.github.io/blox/blox-hack/examples/viewer/img/ticks.jpg)
 
 ## Usage
-(WIP)
+
+```html
+<script src="dist/blox-hack.min.js"></script>
+
+<script>
+let scene = null;
+const parent = 0;
+const blox = new BloxHack({description: '../public/examples/example_tick.js'}, parent, {
+    onBehaviorScene: bs => { // custom callback by blox-hack
+        if (bs.isHack) {
+            scene = bs;
+        }
+    },
+});
+
+const camera = new THREE.PerspectiveCamera(...);
+const renderer = new THREE.WebGLRenderer(...);
+setTimeout(() => {
+    if (!scene) return;
+    scene.updateScene(); // custom update method by blox-hack
+    renderer.render(scene, camera);
+}, 200); // 5 fps
+</script>
+```
 
 ## Build
-(WIP)
+```sh
+$ npm install  # set up build tools
+$ npm run build  # generate module files in lib/
+```
