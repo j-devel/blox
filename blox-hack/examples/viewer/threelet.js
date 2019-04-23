@@ -46,7 +46,7 @@ class Threelet {
 
     static _init(canvas, classControls, classStats, optScene) {
         const camera = new THREE.PerspectiveCamera(75, canvas.width/canvas.height, 0.001, 1000);
-        camera.position.set(0, 0, 1.0);
+        camera.position.set(0, 0, 5.0);
         camera.up.set(0, 0, 1); // important for OrbitControls
 
         const renderer = new THREE.WebGLRenderer({
