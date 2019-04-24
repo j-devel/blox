@@ -86,8 +86,11 @@
             // for this naive dev version, not looping with rAF()...
             iid = setInterval(() => {
                 if (!threelet) return;
-                // Here, threelet.scene is a BehaviorScene instance with updateScene()
-                threelet.scene.updateScene(clock.getElapsedTime());
+
+                // Here, threelet.scene is a BehaviorScene instance
+                // with update() provided by BloxHack
+                threelet.scene.update(clock.getElapsedTime());
+
                 threelet.render();
             }, 1000/fps);
             // console.log('@@ updateLoop(): new interval:', iid);
@@ -186,17 +189,15 @@
     const blox = new BloxHack({description: fileInfo.path}, undefined, {
         onBehaviorScene: bs => {
             console.log('@@ bs:', bs);
-            if (bs.isHack) {
-                // threelet assumes (0,0,1) is the up vector, so adapt the scene
-                bs.rotation.x = Math.PI/2;
+            // threelet assumes (0,0,1) is the up vector, so adapt the scene
+            bs.rotation.x = Math.PI/2;
 
-                threelet = new Threelet({
-                    canvas: document.getElementById("canvas"),
-                    optScene: bs,
-                    optClassControls: window.THREE.OrbitControls,
-                    optClassStats: window.Stats,
-                });
-            }
+            threelet = new Threelet({
+                canvas: document.getElementById("canvas"),
+                optScene: bs,
+                optClassControls: window.THREE.OrbitControls,
+                optClassStats: window.Stats,
+            });
         },
     });
     console.log('@@ blox:', blox);

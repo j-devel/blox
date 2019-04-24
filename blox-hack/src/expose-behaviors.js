@@ -11,9 +11,8 @@ class BehaviorScene extends THREE.Scene {
         // this.camera = blox.add({label:"camera"})
         // this.renderer.reset(this,this.camera,this.camera)
         //========
-        this.isHack = true;
         // emulate updateScene() of BehaviorRenderer.js
-        this.updateScene = (time) => {
+        this.update = (time) => {
             // console.log('@@ updateScene(): time:', time);
             blox.on_event({
                 blox: blox,

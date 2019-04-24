@@ -21,16 +21,15 @@ This viewer supports basic features such as scene selection and FPS control.
 let scene = null;
 const parent = 0;
 const blox = new BloxHack({description: '../public/examples/example_tick.js'}, parent, {
-    onBehaviorScene: bs => { // custom callback by blox-hack
-        if (bs.isHack) { scene = bs; }
-    },
+    onBehaviorScene: bs => { scene = bs; }, // custom callback by blox-hack
 });
 
 const camera = new THREE.PerspectiveCamera(...);
 const renderer = new THREE.WebGLRenderer(...);
+const clock = new THREE.Clock();
 setTimeout(() => {
     if (!scene) return;
-    scene.updateScene(); // custom update method by blox-hack
+    scene.update(clock.getElapsedTime()); // custom update method by blox-hack
     renderer.render(scene, camera);
 }, 200); // 5 fps
 </script>
