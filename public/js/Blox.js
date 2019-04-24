@@ -3,7 +3,7 @@ import {importModule} from '../lib/importModule.js'
 
 // Basic
 import {BehaviorRenderer} from './BehaviorRenderer.js'
-import {BehaviorScene} from './BehaviorScene.js'
+//import {BehaviorScene} from './BehaviorScene.js' // hack -- use custom BehaviorScene instead via expose-behaviors.js
 import {BehaviorCamera} from './BehaviorCamera.js'
 import {BehaviorLight} from './BehaviorLight.js'
 import {BehaviorMesh} from './BehaviorMesh.js'
