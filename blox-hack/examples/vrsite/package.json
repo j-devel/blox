@@ -1,0 +1,49 @@
+{
+    "private": true,
+    "name": "vrsite",
+    "version": "0.0.0",
+    "description": "",
+    "main": "dist/app.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "dist": "npm run build && mkdir -p ./dist && cp ./lib/app.min.js ./dist/app.js",
+        "build": "webpack --mode development --env dev && webpack --mode production --env build && npm run test",
+        "dev": "webpack --mode development --progress --colors --watch --env dev",
+        "test": "mocha --require babel-core/register --colors ./test/*.spec.js",
+        "test:watch": "mocha --require babel-core/register --colors -w ./test/*.spec.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "keywords": [
+        "app",
+        "blox"
+    ],
+    "author": "j-devel",
+    "license": "MIT",
+    "bugs": {
+        "url": ""
+    },
+    "homepage": "",
+    "dependencies": {},
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^8.0.3",
+        "babel-loader": "^7.1.2",
+        "babel-plugin-add-module-exports": "^0.2.1",
+        "babel-preset-env": "^1.6.1",
+        "chai": "^4.1.2",
+        "eslint": "^5.3.0",
+        "eslint-loader": "^2.1.0",
+        "mocha": "^4.0.1",
+        "uglifyjs-webpack-plugin": "^1.3.0",
+        "webpack": "^4.16.5",
+        "webpack-bundle-analyzer": "^3.0.2",
+        "webpack-cli": "^3.1.0",
+        "yargs": "^10.0.3"
+    }
+}
