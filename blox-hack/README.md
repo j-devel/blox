@@ -27,7 +27,7 @@ const blox = new BloxHack({description: '../public/examples/example_tick.js'}, p
 const camera = new THREE.PerspectiveCamera(...);
 const renderer = new THREE.WebGLRenderer(...);
 const clock = new THREE.Clock();
-setTimeout(() => {
+setInterval(() => {
     if (!scene) return;
     scene.update(clock.getElapsedTime()); // custom update method by blox-hack
     renderer.render(scene, camera);
