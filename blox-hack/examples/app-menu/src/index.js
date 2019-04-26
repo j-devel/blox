@@ -76,7 +76,6 @@ class App extends SDK.App {
             const ex = 'hello_world.js'; // ok
             // const ex = 'bouncing_scene.js'; // TODO
             // const ex = 'example_tick.js'; // TODO; how to shim path for fonts/ ????
-            // const filePath = `${__pathBloxPathDev}/public/examples/${ex}`;
             const filePath = `${__pathBloxPathDev}/blox-hack/examples/app-menu/blox-examples/${ex}`;
 
             const parent = 0;
