@@ -3,7 +3,7 @@ import {importModule} from '../lib/importModule.js'
 
 // Basic
 import {BehaviorRenderer} from './BehaviorRenderer.js'
-//import {BehaviorScene} from './BehaviorScene.js' // hack -- use custom BehaviorScene instead via expose-behaviors.js
+//import {BehaviorScene} from './BehaviorScene.js' // blox-hack -- use custom BehaviorScene instead via expose-behaviors.js
 import {BehaviorCamera} from './BehaviorCamera.js'
 import {BehaviorLight} from './BehaviorLight.js'
 import {BehaviorMesh} from './BehaviorMesh.js'
@@ -90,7 +90,7 @@ export class BehaviorGroup {
 	///
 	/// Manufacture a new blox from a description
 	///
-	/// description = a json HASH describing a set of behaviors OR a string indicating a document to load 
+	/// description = a json HASH describing a set of behaviors OR a string indicating a document to load
 	///
 
 	push(description) {
@@ -159,11 +159,11 @@ class BehaviorFunctions {
 		if(this.debug)console.log("functions:: propagating " + args.name + " from " + this.blox.name )
 
 		// look for specifically named events in local scope and call them
-		this._on_specific_named_event(args.name,args)	
+		this._on_specific_named_event(args.name,args)
 
 		// also, pass any specialized events to any listeners generic on_event catch all
 		if(args.name == "on_event") return
-		this._on_specific_named_event("on_event",args)	
+		this._on_specific_named_event("on_event",args)
 	}
 
 	_on_specific_named_event(name,args) {
@@ -545,4 +545,3 @@ export class Blox {
 		return results
 	}
 }
-

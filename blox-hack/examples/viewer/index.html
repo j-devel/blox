@@ -16,11 +16,11 @@
         <a href="#floating_text.js"><span>Floating Text in 3D</span></a>
         <a href="#example_tick.js"><span>User scripting</span></a>
         <a href="#example_walking.js"><span>Walking</span></a>
-        <a href="examples/cherry_blossoms.html"><span>Cherry Blossoms and Particles</span></a>
-        <a href="examples/proximity_events.html"><span>Simple Collisions - Fox in Field</span></a>
+        <!-- <a href="examples/cherry_blossoms.html"><span>Cherry Blossoms and Particles</span></a> -->
+        <!-- <a href="examples/proximity_events.html"><span>Simple Collisions - Fox in Field</span></a> -->
         <!-- shims -->
-        <a href="#cherry_blossoms.js"><span>FIXME shim</span></a>
-        <a href="#proximity_events.js"><span>shim</span></a>
+        <a href="#cherry_blossoms.js"><span>nofix: using public/blox/cherry_tree.js</span></a>
+        <a href="#proximity_events.js"><span>note: fixed with soft shim: ../art/ to art/</span></a>
     </div>
 
     <script src="../../../public/lib/three.js"></script>
@@ -45,7 +45,7 @@
     <script src="../../../public/lib/three.proton.js"></script>
 
     <!-- BloxHack use in prod -->
-    <script src="../../dist/blox-hack.min.js"></script>
+    <!-- <script src="../../dist/blox-hack.min.js"></script> -->
     <!-- <script src="../../lib/blox-hack.min.js"></script> -->
     <!-- <script src="../../lib/blox-hack.js"></script> -->
 
@@ -54,13 +54,14 @@
     <script src="./jquery.min.js"></script>
 
     <script type="module">
-    // import BloxHack from "../../src/index.js"; // BloxHack use in dev
+    import BloxHack from "../../src/index.js"; // BloxHack use in dev
     import Threelet from "./threelet.js";
 
     const resolveFileInfo = () => {
         // const fileDefault = 'hello_world.js';
         const fileDefault = 'example_tick.js';
-        const dir = '../../../public/examples';
+        // const dir = '../../../public/examples'; // deprecated!!!!
+        const dir = './blox-examples';
         const hash = window.location.hash.replace('#','');
         const file = hash ? hash : fileDefault;
         return {

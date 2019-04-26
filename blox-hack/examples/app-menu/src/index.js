@@ -43,7 +43,8 @@ class App extends SDK.App {
             'LineSegments2.js',
             'Line2.js',
             'Wireframe.js',
-            'three-gltf-loader.js',
+            // 'three-gltf-loader.js',
+            'three-gltf-loader--debug.js',
             'ammo.js',
             'XRSupport.js',
             'three.proton.js',
@@ -70,14 +71,13 @@ class App extends SDK.App {
 
         (async () => {
             const BloxHack = await this.loadModules();
-            console.log('@@ BloxHack:', BloxHack);
+            // console.log('@@ BloxHack:', BloxHack);
 
-            // FIXME errors raised  three.js version too old???
-            // CHECK fonts/art dirs shim????
-            const ex = 'hello_world.js'; // FIXME the eye model no show with errors...
-            // const ex = 'bouncing_scene.js';
-            // const ex = 'example_tick.js';
-            const filePath = `${__pathBloxPathDev}/public/examples/${ex}`;
+            const ex = 'hello_world.js'; // ok
+            // const ex = 'bouncing_scene.js'; // TODO
+            // const ex = 'example_tick.js'; // TODO; how to shim path for fonts/ ????
+            // const filePath = `${__pathBloxPathDev}/public/examples/${ex}`;
+            const filePath = `${__pathBloxPathDev}/blox-hack/examples/app-menu/blox-examples/${ex}`;
 
             const parent = 0;
             this.blox = new BloxHack({description: filePath}, parent, {

@@ -34,6 +34,8 @@ class BloxHack extends Blox {
             console.log('@@ out for scene:', out);
             if (this.onBehaviorScene) { this.onBehaviorScene(out); }
         }
+
+        
         return out;
     }
 }

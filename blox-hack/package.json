@@ -8,7 +8,7 @@
         "test": "test"
     },
     "scripts": {
-        "dist": "npm run build && npm run build:esm && rm -rf ./dist && cp -r ./lib ./dist",
+        "dist": "npm run build && npm run build:esm && mkdir -p ./dist && cp ./lib/*.js ./dist/",
         "build": "webpack --mode development --env dev && webpack --mode production --env build && npm run test",
         "build:esm": "webpack --mode production --env esm && npm run test",
         "dev": "webpack --mode development --progress --colors --watch --env dev",
