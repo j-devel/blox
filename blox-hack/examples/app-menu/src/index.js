@@ -6,8 +6,8 @@ const __pathBloxPathDev = '/media/w3reality/threejs/blox-hack';
 class App extends SDK.App {
     // override
     static createWorld() {
-        const world = new World(8, 16, 32);
-        world.setSpawnPose([4, 2, 4+0, 0, 0]);
+        const world = new World(8, 8, 8);
+        world.setSpawnPose([6, 2, 4+0, 0, -Math.PI/2]);
         world.setChunkSize(4);
 
         const addPlane = (mx, my, z, mat, offx=0, offy=0) => {
@@ -18,12 +18,11 @@ class App extends SDK.App {
             }
         };
 
-        addPlane(8, 16, 0, BLOCK.GLASS);
+        addPlane(8, 8, 0, BLOCK.GLASS);
         world.addBlock(2, 5, 2, BLOCK.MODEL_ANCHOR, {href: "", text: "hello_world.js"});
-        world.addBlock(5, 7, 2, BLOCK.MODEL_ANCHOR, {href: "", text: "bouncing_scene.js"});
-        world.addBlock(5, 8, 2, BLOCK.MODEL_ANCHOR, {href: "", text: "example_tick.js"});
-        addPlane(2, 2, 0, BLOCK.MODEL_TEST, 4, 12); // rockets
-        world.addBlock(2, 13, 2, BLOCK.MODEL_ANCHOR, {href: "", text: "proximity_events.js"});
+        world.addBlock(3, 5, 2, BLOCK.MODEL_ANCHOR, {href: "", text: "bouncing_scene.js"});
+        world.addBlock(4, 5, 2, BLOCK.MODEL_ANCHOR, {href: "", text: "example_tick.js"});
+        world.addBlock(0, 2, 1, BLOCK.MODEL_TEST); // rocket
 
         return world;
     }
@@ -73,9 +72,9 @@ class App extends SDK.App {
             const BloxHack = await this.loadModules();
             // console.log('@@ BloxHack:', BloxHack);
 
-            const ex = 'hello_world.js'; // ok
-            // const ex = 'bouncing_scene.js'; // TODO
-            // const ex = 'example_tick.js'; // TODO; how to shim path for fonts/ ????
+            // const ex = 'hello_world.js'; // ok
+            // const ex = 'bouncing_scene.js'; // ok
+            const ex = 'example_tick.js'; // TODO; how to shim path for fonts/ ????
             const filePath = `${__pathBloxPathDev}/blox-hack/examples/app-menu/blox-examples/${ex}`;
 
             const parent = 0;
