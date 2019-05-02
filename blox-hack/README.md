@@ -1,6 +1,6 @@
-# blox-hack.js
+# (Experimental)
 
-**blox-hack** is a wrapper library for [Blox](https://github.com/anselm/blox) that can
+This is a [Blox](https://github.com/anselm/blox) mod that can
 - expose the Blox-based scene object to the caller, and
 - provide the custom render/update handles of the scene.
 
@@ -10,7 +10,7 @@
 
 This viewer supports basic features such as scene selection and FPS control.
 
-![ticks](https://j-devel.github.io/blox/blox-hack/examples/viewer/img/ticks.jpg)
+<!-- ![ticks](https://j-devel.github.io/blox/blox-hack/examples/viewer/img/ticks.jpg) -->
 
 ## Usage
 
